@@ -1,6 +1,7 @@
 package ar.edu.unlar.prog3.tp_comparable_comparator.domain;
 
-public class Estudiante {
+//Estudiante implementa la interfaz Comparable <Estudiante>
+public class Estudiante implements Comparable <Estudiante> {
     
     //Atributos 
     private String legajo;
@@ -61,5 +62,12 @@ public class Estudiante {
                 " ]";
     }
 
+    /* Metodo implementado de la interfaz Comparable
+       Usamos Double.compare y para que sea descendente (de mayor a menor) invertimos el orden de los argumentos: 'otroEstudiante' contra 'this' 
+    */
+    @Override
+    public int compareTo(Estudiante otroEstudiante) {
+        return Double.compare(otroEstudiante.getPromedio(), this.getPromedio());
+    }
     
 }
