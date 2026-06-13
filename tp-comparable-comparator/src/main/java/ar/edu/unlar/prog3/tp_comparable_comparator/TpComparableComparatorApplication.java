@@ -2,6 +2,7 @@ package ar.edu.unlar.prog3.tp_comparable_comparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.boot.SpringApplication;
@@ -38,6 +39,36 @@ public class TpComparableComparatorApplication {
 		for (Estudiante e : lista) {
 			System.out.println(e);
 		}
+
+		//Ordenar por cantidadMateriasAprobadas de forma ascendente con funcion Lambda
+		Comparator <Estudiante> porMaterias = (e1,e2) -> Integer.compare(e1.getCantidadMateriasAprobadas(),e2.getCantidadMateriasAprobadas());
+
+		//Comparators para nombre (alfabetico) y edad (ascendente) con Comparator.comparing() + method reference
+		Comparator<Estudiante> porNombre = Comparator.comparing(Estudiante::getNombre);
+		Comparator<Estudiante> porEdad = Comparator.comparing(Estudiante::getEdad);
+
+		//Verificacion mediante list.sort(comparator)
+		
+		System.out.println("Ordenado por materias aprobadas (Ascendente-Lambda)");
+		lista.sort(porMaterias);
+		for (Estudiante e : lista) {
+			System.out.println(e);
+		}
+
+		System.out.println("Ordenado por nombre(Alfabetico-method reference)");
+		lista.sort(porNombre);
+		for (Estudiante e : lista) {
+			System.out.println(e);
+		}
+
+		System.out.println("Ordenado por edad(Ascendente-method reference)");
+		lista.sort(porEdad);
+		for (Estudiante e : lista) {
+			System.out.println(e);
+		}
+
+
+
 	}
 	
 	
