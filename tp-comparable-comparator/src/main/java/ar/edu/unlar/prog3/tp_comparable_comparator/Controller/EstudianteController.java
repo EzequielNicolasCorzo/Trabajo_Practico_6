@@ -1,4 +1,4 @@
-package ar.edu.unlar.prog3.tp_comparable_comparator.Controller;
+package ar.edu.unlar.prog3.tp_comparable_comparator.controller;
 
 import java.util.List;
 
