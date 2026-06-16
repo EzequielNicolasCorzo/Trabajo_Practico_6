@@ -101,6 +101,32 @@ public class TpComparableComparatorApplication {
         for (Estudiante e : lista) {
             System.out.println(e);
         }	
+
+        //Creamos los dos estudiantes con edades extremas
+        Estudiante estMax = new Estudiante("LU-MAX", "Estudiante Viejo", 5.0, Integer.MAX_VALUE, 10);
+        Estudiante estMin = new Estudiante("LU-MIN", "Estudiante Joven", 5.0, -1, 10);
+
+        List<Estudiante> listaEdades = new ArrayList<>();
+        listaEdades.add(estMax);
+        listaEdades.add(estMin);
+
+        //Comparator con el "truco de la resta" (INCORRECTO)
+        Comparator<Estudiante> comparadorMalo = (e1, e2) -> e1.getEdad() - e2.getEdad();
+
+        listaEdades.sort(comparadorMalo);
+        System.out.println("Orden con resta (Falla por overflow, el de edad -1 quedara segundo):");
+        for (Estudiante e : listaEdades) {
+            System.out.println(e);
+        }
+
+        //Corregido con Integer.compare() (CORRECTO)
+        Comparator<Estudiante> comparadorBueno = (e1, e2) -> Integer.compare(e1.getEdad(), e2.getEdad());
+        
+        listaEdades.sort(comparadorBueno);
+        System.out.println("Orden con Integer.compare() (Correcto, el de edad -1 queda primero):");
+        for (Estudiante e : listaEdades) {
+            System.out.println(e);
+        }
 	}
 	
 	

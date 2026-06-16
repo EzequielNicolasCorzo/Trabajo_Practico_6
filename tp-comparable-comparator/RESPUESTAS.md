@@ -41,3 +41,15 @@ A)
 2. `Open/Closed Principle (OCP)`: 
     La clase debería estar abierta a la extensión pero cerrada a la modificación. 
     Si necesitamos un nuevo ordenamiento (ej. por edad), tendriamos que abrir y modificar el codigo fuente de `Estudiante`, lo cual es un síntoma de mal diseño.
+
+# Pregunta 4: Explicá con tus palabras qué es un overflow de enteros, por qué el "truco de la resta" lo provoca, qué parte del contrato de Comparator
+# rompe, y por qué Integer.compare() no sufre este problema.
+
+A)
+    Un `overflow de enteros` ocurre cuando una operacion matematica excede la capacidad de almacenamiento del tipo de dato `int` en Java (cuyo limite superior es equivalente a 2.147.483.647). 
+B)
+    El `truco de la resta` (`e1.getEdad() - e2.getEdad()`) provoca este error porque al restar un numero negativo a un numero positivo maximo (ej. `2147483647 - (-1)`), el resultado matemático supera el limite de memoria. Java no lanza un error, sino que el valor da "la vuelta" y se convierte en un numero extremadamente negativo (`-2147483648`). 
+C)
+    Al devolver un numero negativo, el comparador interpreta erroneamente que el primer elemento es `menor` que el segundo, rompiendo el contrato de Comparator al generar un orden inconsistente y falso.
+D)
+    Por el contrario, `Integer.compare()` no sufre este problema porque no realiza operaciones aritmeticas; utiliza internamente operadores relacionales (`<` y `>`) para devolver estrictamente `-1`, `0` o `1`, garantizando una evaluación segura y libre de desbordamientos.
