@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import ar.edu.unlar.prog3.tp_comparable_comparator.domain.Estudiante;
 import ar.edu.unlar.prog3.tp_comparable_comparator.repository.EstudianteRepository;
 
+import java.text.Collator;
+import java.util.Locale;
 @Service
 public class EstudianteService {
 
@@ -18,18 +20,24 @@ public class EstudianteService {
     // Nuestro mapa de estrategias
     private final Map<String, Comparator<Estudiante>> estrategiasDeOrdenamiento;
 
-    public EstudianteService(EstudianteRepository repository) {
+   public EstudianteService(EstudianteRepository repository) {
         this.repository = repository;
+
+        // Configuramos el Collator para español (Argentina) con la forma moderna (Java 19+)
+        Collator collator = Collator.getInstance(Locale.of("es", "AR"));
+        collator.setStrength(Collator.PRIMARY); // Ignora tildes y mayúsculas, pero respeta la Ñ
         
         // Inicializamos el Map con las estrategias de comparación (Patron Strategy)
         estrategiasDeOrdenamiento = new HashMap<>();
         estrategiasDeOrdenamiento.put("edad", Comparator.comparing(Estudiante::getEdad));
-        estrategiasDeOrdenamiento.put("nombre", Comparator.comparing(Estudiante::getNombre));
+        
+        // Usamos el comparador con el collator para el nombre
+        estrategiasDeOrdenamiento.put("nombre", Comparator.comparing(Estudiante::getNombre, collator));
+        
         estrategiasDeOrdenamiento.put("materiasAprobadas", Comparator.comparing(Estudiante::getCantidadMateriasAprobadas));
         estrategiasDeOrdenamiento.put("legajo", Comparator.comparing(Estudiante::getLegajo));
         estrategiasDeOrdenamiento.put("promedio", Comparator.comparing(Estudiante::getPromedio));
     }
-
     public List<Estudiante> ordenarEstudiantes(String sortBy, String order) {
         List<Estudiante> lista = repository.obtenerTodos();
         

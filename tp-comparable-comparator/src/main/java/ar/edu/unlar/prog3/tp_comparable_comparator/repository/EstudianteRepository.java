@@ -26,6 +26,10 @@ public class EstudianteRepository {
         estudiantes.add(new Estudiante("LU-008", "Sofia Paz", 7.2, 20, 10)); // Empate promedio y materias con LU-002
         estudiantes.add(new Estudiante("LU-009", "Diego Luna", 8.9, 22, 17));
         estudiantes.add(new Estudiante("LU-010", "Gaston Soler", 6.0, 24, 6));
+        // Estudiantes de prueba con tildes en el apellido
+        estudiantes.add(new Estudiante("LU-011", "Álvarez Ana", 8.0, 22, 10));
+        estudiantes.add(new Estudiante("LU-012", "Benítez Luis", 7.5, 23, 11));
+        estudiantes.add(new Estudiante("LU-013", "Nuñez Carla", 9.0, 21, 15));
     }
 
     public List<Estudiante> obtenerTodos() {
