@@ -67,8 +67,40 @@ public class TpComparableComparatorApplication {
 			System.out.println(e);
 		}
 
+        //Creamos un comparador base por promedio descendente
+        Comparator<Estudiante> porPromedioDescendente = Comparator.comparing(Estudiante::getPromedio).reversed();
 
+        //Desempate con thenComparing(): Primero por promedio descendente, luego por nombre (alfabetico)
+        Comparator<Estudiante> porPromedioYNombre = porPromedioDescendente.thenComparing(Estudiante::getNombre);
 
+        //Orden inverso con reversed(): A partir del descendente, generamos el ascendente
+        Comparator<Estudiante> porPromedioAscendente = porPromedioDescendente.reversed();
+
+        //Combinamos todo: Materias aprobadas descendente y, a igual cantidad, nombre ascendente
+        Comparator<Estudiante> porMateriasDescYNombreAsc = Comparator
+                .comparing(Estudiante::getCantidadMateriasAprobadas)
+                .reversed()
+                .thenComparing(Estudiante::getNombre);
+
+		//Verificamos en consola
+        
+        System.out.println("Ordenado por promedio (Desc) y nombre(Asc)");
+        lista.sort(porPromedioYNombre);
+        for (Estudiante e : lista) {
+            System.out.println(e);
+        }
+
+        System.out.println("Ordenado por promedio (Ascendente - Invertido)");
+        lista.sort(porPromedioAscendente);
+        for (Estudiante e : lista) {
+            System.out.println(e);
+        }
+
+        System.out.println("Ordenado por materias (Desc) y nombre(Asc)");
+        lista.sort(porMateriasDescYNombreAsc);
+        for (Estudiante e : lista) {
+            System.out.println(e);
+        }	
 	}
 	
 	
