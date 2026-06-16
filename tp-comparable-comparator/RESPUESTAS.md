@@ -53,3 +53,16 @@ C)
     Al devolver un numero negativo, el comparador interpreta erroneamente que el primer elemento es `menor` que el segundo, rompiendo el contrato de Comparator al generar un orden inconsistente y falso.
 D)
     Por el contrario, `Integer.compare()` no sufre este problema porque no realiza operaciones aritmeticas; utiliza internamente operadores relacionales (`<` y `>`) para devolver estrictamente `-1`, `0` o `1`, garantizando una evaluación segura y libre de desbordamientos.
+
+# Pregunta 5: ¿Qué patrón de diseño estás aplicando al usar un Map<String, Comparator> en lugar de un switch? Explicá cómo se relaciona este patrón con el # polimorfismo y por qué es preferible a la alternativa procedural.
+
+A)
+    Al utilizar un `Map<String, Comparator>` estamos aplicando el `Patron de Diseño Strategy` 
+B)
+    Este patron permite definir una familia de algoritmos (en nuestro caso, las distintas logicas de comparacion), encapsular cada uno de ellos (dentro de las implementaciones de `Comparator`) y hacerlos intercambiables dinamicamente en tiempo de ejecución. 
+
+C)
+    En lugar de preguntar proceduralmente ¿que parametro llego? usando un `switch` o multiples `if-else` para ejecutar un bloque de codigo distinto, utilizamos el polimorfismo de la interfaz `Comparator`. El metodo `sort()` simplemente invoca al metodo `compare()` del objeto que extrajimos del mapa, sin importarle cual de todas las estrategias especificas se esta ejecutando por detras.
+
+D)
+    Es superior a la alternativa procedural porque respeta el `Principio Abierto/Cerrado (OCP)` de SOLID. Si en el futuro necesitamos agregar un nuevo criterio de ordenamiento (ej. por "año de ingreso"), solo necesitamos agregar un nuevo elemento al `Map` en el constructor. El metodo central `ordenarEstudiantes` no sufrira ninguna modificación, reduciendo el riesgo de introducir bugs en logicas preexistentes.
